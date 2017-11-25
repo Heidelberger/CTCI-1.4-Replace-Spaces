@@ -12,7 +12,7 @@ namespace CTCI_1._4_Replace_Spaces
         {
             PrintHeaderMsg(1, 4, "Replace Spaces");
 
-
+       
 
             Console.ReadLine();
         }
