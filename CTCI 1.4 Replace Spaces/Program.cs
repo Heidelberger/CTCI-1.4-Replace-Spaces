@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace CTCI_1._4_Replace_Spaces
 
         private static void ReplaceSpaces_InPlace(char[] passed_Array)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             // work backwards so we don't need additional memory
 
             // find end of text in the array            
@@ -56,11 +59,18 @@ namespace CTCI_1._4_Replace_Spaces
                 --text_cursor;
             }
 
+            sw.Stop();
+
             Console.WriteLine("In-Place:   " + new string(passed_Array));
+            Console.WriteLine("            " + (long)sw.ElapsedTicks + " ticks");
+            Console.WriteLine("            0 Bytes"); // according to VS performance profiler
+            Console.WriteLine();
         }
 
         private static void ReplaceSpaces_Manual(string string1)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             // count spaces in order to calculate how long an array we need
             int space_count = 0;
             for (int i = 0; i < string1.Length; ++i)
@@ -90,12 +100,27 @@ namespace CTCI_1._4_Replace_Spaces
                 }
             }
 
-            Console.WriteLine("Manual:     " + new string(charArray));            
+            sw.Stop();
+
+            Console.WriteLine("Manual:     " + new string(charArray));
+            Console.WriteLine("            " + (long)sw.ElapsedTicks + " ticks");
+            Console.WriteLine("            204 Bytes"); // according to VS performance profiler
+
+            Console.WriteLine();
         }
 
         private static void ReplaceSpaces_DotNet(string string1)
         {
-            Console.WriteLine(".NET:       " + string1.Replace(" ", "%20"));
+            Stopwatch sw = Stopwatch.StartNew();
+
+            string temp = string1.Replace(" ", "%20");
+
+            sw.Stop();
+
+            Console.WriteLine(".NET:       " + temp);
+            Console.WriteLine("            " + (long)sw.ElapsedTicks + " ticks");
+            Console.WriteLine("            2683 Bytes"); // according to VS performance profiler
+            Console.WriteLine();
         }
 
         private static void PrintHeaderMsg(int chapter, int problem, string title)
